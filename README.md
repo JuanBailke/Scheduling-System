@@ -1,6 +1,6 @@
 # TODO
 
-## Implementando os padrões de projeto Singleton, Facade, Proxy e Observer
+## Implementando os padrões de projeto Singleton, Facade, Proxy, Mapper e Observer
 
 ```mermaid
 
