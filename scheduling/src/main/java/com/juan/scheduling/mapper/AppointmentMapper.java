@@ -7,6 +7,8 @@ import com.juan.scheduling.model.Doctor;
 import com.juan.scheduling.model.Patient;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class AppointmentMapper {
 
@@ -38,5 +40,16 @@ public class AppointmentMapper {
                 appointment.getAppointmentDateTime(),
                 appointment.getStatus()
         );
+    }
+
+    /**
+     * Converte uma lista de entidades Appointment em uma lista de DTOs de resposta.
+     * @param appointments A lista de entidades buscadas no banco.
+     * @return Uma lista de DTOs com os dados a serem exibidos na resposta da API.
+     */
+    public List<AppointmentResponseDTO> toResponseDTOList(List<Appointment> appointments) {
+        return appointments.stream()
+                .map(this::toResponseDTO)
+                .toList();
     }
 }
