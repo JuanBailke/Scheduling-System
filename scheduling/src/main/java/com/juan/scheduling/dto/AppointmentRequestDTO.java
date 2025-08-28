@@ -11,7 +11,7 @@ public record AppointmentRequestDTO(
         @NotNull(message = "O ID do médico é obrigatório.")
         Long doctorId,
         @NotNull(message = "A data e hora do agendamento são obrigatórias.")
-        @FutureOrPresent(message = "A data e hora do agendamento não pode ser no passado.")
-        LocalDateTime datetime
+        @FutureOrPresent(message = "A data e hora do agendamento não podem ser no passado.")
+        LocalDateTime dateTime
 ) {
 }
