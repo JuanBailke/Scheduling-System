@@ -1,5 +1,6 @@
 package com.juan.scheduling.service;
 
+import com.juan.scheduling.aop.annotation.LogExecutionTime;
 import com.juan.scheduling.dto.AppointmentRequestDTO;
 import com.juan.scheduling.dto.AppointmentResponseDTO;
 import com.juan.scheduling.event.AppointmentScheduledEvent;
@@ -32,6 +33,7 @@ public class AppointmentService {
      * @param request para receber os dados da consulta no padrão DTO
      * @return o DTO de resposta com os dados da consulta agendada
      */
+    @LogExecutionTime
     public AppointmentResponseDTO scheduleAppointment(AppointmentRequestDTO request){
         var patient = patientRepository.findById(request.patientId())
                 .orElseThrow(() -> new ResourceNotFoundException("Paciente com id " + request.patientId() + " não encontrado"));
@@ -47,6 +49,7 @@ public class AppointmentService {
         return appointmentMapper.toResponseDTO(savedAppointment);
     }
 
+    @LogExecutionTime
     public List<AppointmentResponseDTO> getAllAppointments() {
         var appointments = appointmentRepository.findAll();
         return appointmentMapper.toResponseDTOList(appointments);
