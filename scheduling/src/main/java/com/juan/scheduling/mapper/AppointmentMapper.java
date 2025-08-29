@@ -23,7 +23,7 @@ public class AppointmentMapper {
         return Appointment.builder()
                 .patient(patient)
                 .doctor(doctor)
-                .appointmentDateTime(requestDTO.datetime())
+                .appointmentDateTime(requestDTO.dateTime())
                 .build();
     }
 
