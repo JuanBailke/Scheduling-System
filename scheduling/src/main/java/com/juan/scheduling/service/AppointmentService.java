@@ -2,6 +2,7 @@ package com.juan.scheduling.service;
 
 import com.juan.scheduling.dto.AppointmentRequestDTO;
 import com.juan.scheduling.dto.AppointmentResponseDTO;
+import com.juan.scheduling.event.AppointmentScheduledEvent;
 import com.juan.scheduling.exception.ResourceNotFoundException;
 import com.juan.scheduling.mapper.AppointmentMapper;
 import com.juan.scheduling.model.enums.AppointmentStatus;
@@ -9,6 +10,7 @@ import com.juan.scheduling.repository.AppointmentRepository;
 import com.juan.scheduling.repository.DoctorRepository;
 import com.juan.scheduling.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +25,7 @@ public class AppointmentService {
     private final DoctorRepository doctorRepository;
     private final PatientRepository patientRepository;
     private final AppointmentMapper appointmentMapper;
+    private final ApplicationEventPublisher eventPublisher;
 
     /**
      * Agendar uma nova consulta
@@ -39,6 +42,7 @@ public class AppointmentService {
         newAppointment.setStatus(AppointmentStatus.SCHEDULED);
 
         var savedAppointment = appointmentRepository.save(newAppointment);
+        eventPublisher.publishEvent(new AppointmentScheduledEvent(savedAppointment));
 
         return appointmentMapper.toResponseDTO(savedAppointment);
     }
